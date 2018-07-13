@@ -28,6 +28,8 @@ tera-proxy module to unlock maximum viewing distance
 ## Changelog
 <details>
 
+    1.47
+    - Removed font color bloat
     1.46
     - Added auto-update support
     - Refactored config file
@@ -50,7 +52,7 @@ tera-proxy module to unlock maximum viewing distance
     - Updated code
     - Removed protocol version restriction
     1.21
-    - Added Command dependency
+    - Added `Command` dependency
     - Removed slash support
     1.20
     - Initial Fork
