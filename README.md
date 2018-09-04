@@ -2,7 +2,7 @@
 tera-proxy module to unlock maximum viewing distance
 
 ## Dependency
-- `Command` module
+- `command` module
 
 ## Usage
 - __`camera` · `cam`__
@@ -28,6 +28,9 @@ tera-proxy module to unlock maximum viewing distance
 ## Changelog
 <details>
 
+    1.48
+    - Removed `command` require()
+    - Updated to `mod.command`
     1.47
     - Removed font color bloat
     1.46

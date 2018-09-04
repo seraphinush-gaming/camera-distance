@@ -1,4 +1,6 @@
 {
+    "disableAutoUpdate": false,
+    "options": { "niceName": "auto-camera" },
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/"],
     "supportUrl": "https://github.com/seraphinush-gaming/auto-camera/issues"
 }
