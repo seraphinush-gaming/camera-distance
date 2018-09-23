@@ -3,12 +3,20 @@ tera-proxy module to unlock maximum viewing distance
 
 ## Dependency
 - `command` module
+- `tera-game-state` module
 
 ## Usage
-- __`camera` · `cam`__
+- __`cam`__
   - Toggle on/off
-- __`camera num` · `cam num`__
-  - Set distance at `num`, where `num` is a value between `0` and `99999`
+- __`cam num`__
+  - Set distance at `num`, where `num` is a value between `0` and `inf`
+### Arguments
+- __`cam add num`__
+  - Set character-specific distance at `num`, where `num` is a value between `0` and `inf`
+- __`cam rm`__
+  - Remove character-specific distance setting
+- __`cam set num`__
+  - Set default distance at `num`, where `num` is a value between `0` and `inf`
 
 ## Config
 - __`enable`__
@@ -28,6 +36,12 @@ tera-proxy module to unlock maximum viewing distance
 ## Changelog
 <details>
 
+    1.49
+    - Removed `camera` from name space
+    - Forced hardcoded config update
+    - Added `add` option
+    - Added `rm` option
+    - Added `set` option
     1.48
     - Removed `command` require()
     - Updated to `mod.command`
