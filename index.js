@@ -1,4 +1,4 @@
-// Version 1.49 r:00
+// Version 1.49 r:01
 'use strict';
 
 const fs = require('fs');
@@ -10,22 +10,6 @@ module.exports = function AutoCamera(m) {
 	const cmd = m.command || m.require.command;
 
 	let data = config;
-
-	// to remove at next update
-	const default_config = {
-		"enable": true,
-		"defaultDistance": "800",
-		"characterDefault": []
-	}
-	if (!data.characterDefault) {
-		data = default_config;
-		saveJsonData();
-		console.log(`[auto-camera] : Updated config as necessary.`);
-		console.log(`[auto-camera] : Default distance can now be set via : 'cam set (distance)'.`);
-		console.log(`[auto-camera] : Character-specific distance can now be set via : 'cam add (distance)'.`);
-		console.log(`[auto-camera] : Character-specific distance can be removed via : 'cam rm'.`);
-	}
-	//
 
 	// config
 	let enable = data.enable,
