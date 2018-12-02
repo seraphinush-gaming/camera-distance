@@ -1,4 +1,4 @@
-// Version 1.49 r:01
+// Version 1.49 r:02
 'use strict';
 
 const fs = require('fs');
@@ -6,13 +6,12 @@ const path = require('path');
 
 const config = require('./config.json');
 
-module.exports = function AutoCamera(m) {
-	const cmd = m.command || m.require.command;
-
-	let data = config;
+module.exports = function AutoCamera(mod) {
+	const cmd = mod.command || mod.require.command;
 
 	// config
-	let enable = data.enable,
+	let data = config,
+		enable = data.enable,
 		setDistance = 0;
 	
 	let playerName = '';
@@ -20,11 +19,11 @@ module.exports = function AutoCamera(m) {
 	// command
 	cmd.add('cam', {
 		// toggle
-		$none() {
+		'$none': () => {
 			enable = !enable;
 			send(`${enable ? 'En' : 'Dis'}abled`);
 		},
-		$default(num) {
+		'$default': (num) => {
 			if (!isNaN(num)) {
 				setCamera(num);
 				send(`Distance set at : ${num}`);
@@ -32,31 +31,30 @@ module.exports = function AutoCamera(m) {
 			else send(`Invalid argument. usage : cam (num)`);
 		},
 		// set default
-		add(num) {
+		'add': (num) => {
 			if (!isNaN(num)) {
-				let exist = false;
+				let found = false;
 				for (let i = 0, n = data.characterDefault.length; i < n; i++) {
 					if (data.characterDefault[i].name === playerName) {
-						exist = true;
+						found = true;
 						data.characterDefault[i].distance = num;
-						saveJsonData();
 						break;
 					}
 				}
-				if (!exist) {
+				if (!found) {
 					let temp = {
 						name: playerName,
 						distance: num
 					};
 					data.characterDefault.push(temp);
-					saveJsonData();
 				}
 				setDistance = num;
-				send(`Default distance set for ${playerName} set at ${num}`);
+				saveJsonData();
+				send(`Default distance set for "${playerName}" set at ${num}`);
 			}
 			else send(`Invalid argument. usage : cam [add (num)|rm]`);
 		},
-		rm() {
+		'rm': () => {
 			for (let i = 0, n = data.characterDefault.length; i < n; i++) {
 				if (data.characterDefault[i].name === playerName) {
 					data.characterDefault.splice(i, 1);
@@ -66,7 +64,7 @@ module.exports = function AutoCamera(m) {
 				}
 			}
 		},
-		set(num) {
+		'set': (num) => {
 			if (!isNaN(num)) {
 				data.defaultDistance = num;
 				setDistance = num;
@@ -78,8 +76,8 @@ module.exports = function AutoCamera(m) {
 	});
 
 	// mod.game
-	m.game.on('enter_game', () => {
-		playerName = m.game.me.name;
+	mod.game.on('enter_game', () => {
+		playerName = mod.game.me.name;
 		setDistance = data.defaultDistance;
 		for (let i = 0, n = data.characterDefault.length; i < n; i++) {
 			if (data.characterDefault[i].name === playerName) {
@@ -90,15 +88,14 @@ module.exports = function AutoCamera(m) {
 	})
 
 	// code
-	m.hook('S_SPAWN_ME', 'raw', () => {
+	mod.hook('S_SPAWN_ME', 'raw', () => {
 		if (enable) setTimeout(() => { setCamera(setDistance); }, 1000)
-		//(zone === 9950) ? setDistance = data.defaultDistanceHH : setDistance = data.defaultDistance
 	});
 
 	// helper
 	function setCamera(distance) {
 		setDistance = distance;
-		m.send('S_DUNGEON_CAMERA_SET', 1, {
+		mod.send('S_DUNGEON_CAMERA_SET', 1, {
 			enabled: true,
 			default: setDistance,
 			max: distance
@@ -106,7 +103,7 @@ module.exports = function AutoCamera(m) {
 	}
 
 	function saveJsonData() {
-		fs.writeFileSync(path.join(__dirname, './config.json'), JSON.stringify(data));
+		fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
 	}
 
 	function send(msg) { cmd.message(`: ` + msg); }

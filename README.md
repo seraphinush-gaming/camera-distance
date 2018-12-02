@@ -2,7 +2,7 @@
 tera-proxy module to unlock maximum viewing distance
 
 ## Auto-update guide
-- Create a folder called `auto-camera` in `tera-proxy/bin/node_modules` and download [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/module.json) (right-click save link as...) into the folder
+- Create a folder called `auto-camera` in `tera-proxy/bin/node_modules` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/module.json) << (right-click save link as...) into the folder
 
 ## Dependency
 - `command` module
