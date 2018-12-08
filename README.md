@@ -1,8 +1,9 @@
-# auto-camera
+# auto-camera [![paypal](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=253B80&colorB=333333)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url) [![paypal.me](https://img.shields.io/badge/paypal.me-donate-333333.svg?colorA=169BD7&colorB=333333)](https://www.paypal.me/seraphinush)
 tera-proxy module to unlock maximum viewing distance
+> Support seraph via paypal donations, thanks in advance !
 
 ## Auto-update guide
-- Create a folder called `auto-camera` in `tera-proxy/bin/node_modules` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/module.json) << (right-click save link as...) into the folder
+- Create a folder called `auto-camera` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/module.json) << (right-click save link as...) into the folder
 
 ## Dependency
 - `command` module
@@ -31,7 +32,6 @@ tera-proxy module to unlock maximum viewing distance
 
 ## Info
 - Original author : [teralove](https://github.com/teralove)
-- **Support seraph via paypal donations, thanks in advance : [paypal](https://www.paypal.me/seraphinush)**
 - Normal camera maximum distance is 500
 - Harrowhold camera maximum distance is 1200
 - By default, the initial viewing distance (not max) when you login is 170
@@ -39,6 +39,8 @@ tera-proxy module to unlock maximum viewing distance
 ## Changelog
 <details>
 
+    1.50
+    - Updated for caali-proxy-nextgen
     1.49
     - Removed `camera` from name space
     - Forced hardcoded config update
