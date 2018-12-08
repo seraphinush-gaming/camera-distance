@@ -4,6 +4,5 @@
     "author": "seraphinush",
     "description": "tera-proxy module to unlock maximum viewing distance",
     "version": "1.50.00",
-    "options": { "niceName": "auto-camera" },
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/"]
 }
