@@ -1,4 +1,3 @@
-// Version 1.49 r:02
 'use strict';
 
 const fs = require('fs');
@@ -47,6 +46,7 @@ module.exports = function AutoCamera(mod) {
 						distance: num
 					};
 					data.characterDefault.push(temp);
+					temp = undefined;
 				}
 				setDistance = num;
 				saveJsonData();
@@ -71,7 +71,7 @@ module.exports = function AutoCamera(mod) {
 				saveJsonData();
 				send(`Default distance set at ${num}`);
 			}
-			else send(`Invalid argument. usage : cam set (num)`)
+			else send(`Invalid argument. usage : cam set (num)`);
 		}
 	});
 
@@ -88,8 +88,8 @@ module.exports = function AutoCamera(mod) {
 	})
 
 	// code
-	mod.hook('S_SPAWN_ME', 'raw', () => {
-		if (enable) setTimeout(() => { setCamera(setDistance); }, 1000)
+	mod.hook('S_SPAWN_ME', 'raw', () => { // mod.setTimeout(() => {}, int);
+		if (enable) setTimeout(() => { setCamera(setDistance); }, 1000);
 	});
 
 	// helper
@@ -106,6 +106,6 @@ module.exports = function AutoCamera(mod) {
 		fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
 	}
 
-	function send(msg) { cmd.message(`: ` + msg); }
+	function send(msg) { cmd.message(': ' + msg); }
 
 }
