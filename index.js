@@ -17,19 +17,10 @@ module.exports = function AutoCamera(mod) {
 
 	// command
 	cmd.add('cam', {
-		// toggle
 		'$none': () => {
 			enable = !enable;
 			send(`${enable ? 'En' : 'Dis'}abled`);
 		},
-		'$default': (num) => {
-			if (!isNaN(num)) {
-				setCamera(num);
-				send(`Distance set at : ${num}`);
-			}
-			else send(`Invalid argument. usage : cam (num)`);
-		},
-		// set default
 		'add': (num) => {
 			if (!isNaN(num)) {
 				let found = false;
@@ -41,12 +32,8 @@ module.exports = function AutoCamera(mod) {
 					}
 				}
 				if (!found) {
-					let temp = {
-						name: playerName,
-						distance: num
-					};
+					let temp = { name: playerName, distance: num };
 					data.characterDefault.push(temp);
-					temp = undefined;
 				}
 				setDistance = num;
 				saveJsonData();
@@ -72,6 +59,13 @@ module.exports = function AutoCamera(mod) {
 				send(`Default distance set at ${num}.`);
 			}
 			else send(`Invalid argument. usage : cam set (num)`);
+		},
+		'$default': (num) => {
+			if (!isNaN(num)) {
+				setCamera(num);
+				send(`Distance set at : ${num}`);
+			}
+			else send(`Invalid argument. usage : cam (num)`);
 		}
 	});
 
@@ -93,6 +87,10 @@ module.exports = function AutoCamera(mod) {
 	});
 
 	// helper
+	function saveJsonData() {
+		fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
+	}
+
 	function setCamera(distance) {
 		setDistance = distance;
 		mod.send('S_DUNGEON_CAMERA_SET', 1, {
@@ -102,10 +100,23 @@ module.exports = function AutoCamera(mod) {
 		});
 	}
 
-	function saveJsonData() {
-		fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
+	function send(msg) { cmd.message(': ' + msg); }
+
+	// reload
+	this.saveState = () => {
+		let state = {
+			enable: enable,
+			setDistance: setDistance
+		};
+		return state;
 	}
 
-	function send(msg) { cmd.message(': ' + msg); }
+	this.loadState = (state) => {
+		enable = state.enable;
+		playerName = mod.game.me.name;
+		setDistance = state.setDistance;
+	}
+
+	this.destructor = () => { cmd.remove('cam'); }
 
 }
