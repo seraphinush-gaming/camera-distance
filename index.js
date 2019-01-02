@@ -39,7 +39,8 @@ module.exports = function AutoCamera(mod) {
 				saveJsonData();
 				send(`Default distance set for &lt;${playerName}&gt; set at ${num}.`);
 			}
-			else send(`Invalid argument. usage : cam [add (num)|rm]`);
+			else
+				send(`Invalid argument. usage : cam [add (num)|rm]`);
 		},
 		'rm': () => {
 			for (let i = 0, n = data.characterDefault.length; i < n; i++) {
@@ -58,14 +59,16 @@ module.exports = function AutoCamera(mod) {
 				saveJsonData();
 				send(`Default distance set at ${num}.`);
 			}
-			else send(`Invalid argument. usage : cam set (num)`);
+			else
+				send(`Invalid argument. usage : cam set (num)`);
 		},
 		'$default': (num) => {
 			if (!isNaN(num)) {
 				setCamera(num);
 				send(`Distance set at : ${num}`);
 			}
-			else send(`Invalid argument. usage : cam (num)`);
+			else
+				send(`Invalid argument. usage : cam (num)`);
 		}
 	});
 
