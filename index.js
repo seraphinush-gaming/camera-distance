@@ -12,7 +12,7 @@ module.exports = function AutoCamera(mod) {
 	let data = config,
 		enable = data.enable,
 		setDistance = 0;
-	
+
 	let playerName = '';
 
 	// command
@@ -72,9 +72,14 @@ module.exports = function AutoCamera(mod) {
 		}
 	});
 
-	// mod.game
-	mod.game.on('enter_game', () => {
-		playerName = mod.game.me.name;
+
+	// code
+	mod.hook('S_SPAWN_ME', 'raw', () => { // mod.setTimeout(() => {}, int);
+		if (enable) setTimeout(() => { setCamera(setDistance); }, 1000);
+	});	
+
+	mod.hook('S_LOGIN', 12, { order: -1000 }, (e) => {
+		playerName = e.name;
 		setDistance = data.defaultDistance;
 		for (let i = 0, n = data.characterDefault.length; i < n; i++) {
 			if (data.characterDefault[i].name === playerName) {
@@ -82,11 +87,6 @@ module.exports = function AutoCamera(mod) {
 				break;
 			}
 		}
-	})
-
-	// code
-	mod.hook('S_SPAWN_ME', 'raw', () => { // mod.setTimeout(() => {}, int);
-		if (enable) setTimeout(() => { setCamera(setDistance); }, 1000);
 	});
 
 	// helper
@@ -109,6 +109,7 @@ module.exports = function AutoCamera(mod) {
 	this.saveState = () => {
 		let state = {
 			enable: enable,
+			playerName: playerName,
 			setDistance: setDistance
 		};
 		return state;
@@ -116,7 +117,7 @@ module.exports = function AutoCamera(mod) {
 
 	this.loadState = (state) => {
 		enable = state.enable;
-		playerName = mod.game.me.name;
+		playerName = state.playerName;
 		setDistance = state.setDistance;
 	}
 

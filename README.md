@@ -5,7 +5,7 @@ Support seraph via paypal donations, thanks in advance !
 ```
 
 ## Auto-update guide
-- Create a folder called `auto-camera` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/module.json) << (right-click this link and save as..) into the folder
+- Create a folder called `auto-camera` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/module.json) << (right-click this link and save link as..) into the folder
 
 ## Usage
 - __`cam`__
@@ -37,6 +37,8 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    1.52
+    - Removed `tera-game-state` usage
     1.51
     - Add hot-reload support
     1.50
@@ -48,7 +50,7 @@ Support seraph via paypal donations, thanks in advance !
     - Added `rm` option
     - Added `set` option
     1.48
-    - Removed `command` require()
+    - Removed `Command` require()
     - Updated to `mod.command`
     1.47
     - Removed font color bloat
