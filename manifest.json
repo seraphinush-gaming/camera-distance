@@ -5,8 +5,8 @@
 			"overwrite": false,
 			"hash": "07fa457fbcdd28a335c01c626dfe9ded722c9a560f8ba047c7cc055b68515572"
 		},
-		"index.js": "28e810a884dbae1e644801546bb5b45a65a90aea85467ae8948714b20c83ff3b",
-		"module.json": "69cd12e90bcd322a999947e7209b307ff3f78051e6f52ef1dc9620a74692275d"
+		"index.js": "ef77d209edaff2b6e74576888d0e8a93cc066498bc151d0a408b32059ade973e",
+		"module.json": "8302ef57d21e7ec07d38787f7ab6cfea5ddf1390ffae489139bdbe37e666c010"
 	},
 	"defs": {
 		"S_DUNGEON_CAMERA_SET": 1,

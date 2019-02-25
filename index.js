@@ -75,7 +75,7 @@ module.exports = function AutoCamera(mod) {
 
 	// code
 	mod.hook('S_SPAWN_ME', 'raw', () => { // mod.setTimeout(() => {}, int);
-		if (enable) setTimeout(() => { setCamera(setDistance); }, 1000);
+		if (enable) mod.setTimeout(() => { setCamera(setDistance); }, 1000);
 	});	
 
 	mod.hook('S_LOGIN', 12, { order: -1000 }, (e) => {
@@ -96,11 +96,14 @@ module.exports = function AutoCamera(mod) {
 
 	function setCamera(distance) {
 		setDistance = distance;
-		mod.send('S_DUNGEON_CAMERA_SET', 1, {
+		let _ = mod.trySend('S_DUNGEON_CAMERA_SET', 1, {
 			enabled: true,
 			default: setDistance,
 			max: distance
 		});
+		if (!_) {
+			console.log('Unmapped protocol packet \<S_DUNGEON_CAMERA_SET\>.');
+		}
 	}
 
 	function send(msg) { cmd.message(': ' + msg); }
