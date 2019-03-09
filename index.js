@@ -6,7 +6,7 @@ const path = require('path');
 const config = require('./config.json');
 
 module.exports = function AutoCamera(mod) {
-	const cmd = mod.command || mod.require.command;
+	const cmd = mod.command;
 
 	// config
 	let data = config,
@@ -38,9 +38,9 @@ module.exports = function AutoCamera(mod) {
 				setDistance = num;
 				saveJsonData();
 				send(`Default distance set for &lt;${playerName}&gt; set at ${num}.`);
-			}
-			else
+			} else {
 				send(`Invalid argument. usage : cam [add (num)|rm]`);
+			}
 		},
 		'rm': () => {
 			for (let i = 0, n = data.characterDefault.length; i < n; i++) {
@@ -58,23 +58,23 @@ module.exports = function AutoCamera(mod) {
 				setDistance = num;
 				saveJsonData();
 				send(`Default distance set at ${num}.`);
-			}
-			else
+			} else {
 				send(`Invalid argument. usage : cam set (num)`);
+			}
 		},
 		'$default': (num) => {
 			if (!isNaN(num)) {
 				setCamera(num);
 				send(`Distance set at : ${num}`);
-			}
-			else
+			} else {
 				send(`Invalid argument. usage : cam (num)`);
+			}
 		}
 	});
 
 
 	// code
-	mod.hook('S_SPAWN_ME', 'raw', () => { // mod.setTimeout(() => {}, int);
+	mod.hook('S_SPAWN_ME', 'raw', () => {
 		if (enable) mod.setTimeout(() => { setCamera(setDistance); }, 1000);
 	});	
 
@@ -91,7 +91,7 @@ module.exports = function AutoCamera(mod) {
 
 	// helper
 	function saveJsonData() {
-		fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data));
+		fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data, null, 4));
 	}
 
 	function setCamera(distance) {

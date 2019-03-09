@@ -1,1 +1,5 @@
-{"enable":true,"defaultDistance":"800","characterDefault":[]}
+{
+    "enable": true,
+    "defaultDistance": "800",
+    "characterDefault": []
+}
