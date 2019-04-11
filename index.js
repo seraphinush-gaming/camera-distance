@@ -9,9 +9,9 @@ module.exports = function AutoCamera(mod) {
   const cmd = mod.command;
 
   // config
-  let data = config,
-    enable = data.enable,
-    setDistance = 0;
+  let data = config;
+  let enable = data.enable;
+  let setDistance = 0;
 
   let playerName = '';
 
