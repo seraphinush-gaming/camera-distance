@@ -3,10 +3,10 @@
 		"README.md": "91d843632c66cf6c9caf9134554f7e685f3740c4dc8e801d091474442ae1433b",
 		"config.json": {
 			"overwrite": false,
-			"hash": "823f7435df78fda067f4a388f02d80a77164b1011679af769c3a7409387bfbf0"
+			"hash": "1e12eff2ae64cd285e7ae96bfc62996198d9b699e7956d6b63ff387e5bdb2be1"
 		},
-		"index.js": "b5ab5b91f780732d6faae5e63f86cc06da21f376016d592ec27824a7bb020721",
-		"module.json": "9ca550a61865677a2949386b34c3c65b5398880d5723c3ec13f7ee07432e1380"
+		"index.js": "9fdbab552db54ba477686f7ceda5b20bfd2f7ac388185212deede5a3ca50be07",
+		"module.json": "655a0cb84c4aaeb37509213f2b74b241556594421c67f61959f66c640ae8730a"
 	},
 	"defs": {
 		"S_DUNGEON_CAMERA_SET": 1,
