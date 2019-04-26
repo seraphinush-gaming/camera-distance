@@ -79,7 +79,7 @@ module.exports = function AutoCamera(mod) {
     }
   });
 
-  mod.hook('S_LOGIN', 12, { order: -1000 }, (e) => {
+  mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -1000 }, (e) => {
     playerName = e.name;
     setDistance = data.defaultDistance;
     for (let i = 0, n = data.characterDefault.length; i < n; i++) {
