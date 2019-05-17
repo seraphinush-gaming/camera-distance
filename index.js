@@ -103,6 +103,8 @@ module.exports = function AutoCamera(mod) {
       max: distance
     });
     if (!_) {
+      enable = false;
+
       console.log('Unmapped protocol packet \<S_DUNGEON_CAMERA_SET\>.');
     }
   }
