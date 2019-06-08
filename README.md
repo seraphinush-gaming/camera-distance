@@ -16,23 +16,13 @@ Support seraph via paypal donations, thanks in advance !
 ## Usage
 - __`cam`__
   - Toggle on/off
+### Arguments
 - __`cam num`__
   - Set distance at `num`, where `num` is a value between `0` and `inf`
-### Arguments
 - __`cam add num`__
   - Set character-specific distance at `num`, where `num` is a value between `0` and `inf`
 - __`cam rm`__
   - Remove character-specific distance setting
-- __`cam set num`__
-  - Set default distance at `num`, where `num` is a value between `0` and `inf`
-
-## Config
-- __`enable`__
-  - Initialize module on/off
-  - Default is `true`
-- __`defaultDistance`__
-  - Initialize camera distance
-  - Default distance is `800`
 
 ## Info
 - Original author : [teralove](https://github.com/teralove)
@@ -43,6 +33,9 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    1.53
+    - Added settings-migrator support
+    - Removed `set` option
     1.52
     - Removed `tera-game-state` usage
     1.51

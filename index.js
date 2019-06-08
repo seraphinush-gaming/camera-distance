@@ -1,110 +1,75 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-
-const config = require('./config.json');
-
 module.exports = function AutoCamera(mod) {
   const cmd = mod.command;
 
-  // config
-  let data = config;
-  let enable = data.enable;
-  let setDistance = 0;
+  let settings = mod.settings;
 
-  let playerName = '';
+  let myDistance = 0;
+  let myName = '';
 
   // command
   cmd.add('cam', {
     '$none': () => {
-      enable = !enable;
-      send(`${enable ? 'En' : 'Dis'}abled`);
+      settings.enable = !settings.enable;
+      send(`${settings.enable ? 'En' : 'Dis'}abled`);
     },
     'add': (num) => {
       if (!isNaN(num)) {
-        let found = false;
-        for (let i = 0, n = data.characterDefault.length; i < n; i++) {
-          if (data.characterDefault[i].name === playerName) {
-            found = true;
-            data.characterDefault[i].distance = num;
-            break;
-          }
+        if (settings.characterDefault[myName]) {
+          settings.characterDefault[myName] = num;
+          myDistance = num;
+          send(`Default distance set for &lt;${myName}&gt; set at ${num}.`);
         }
-        if (!found) {
-          let temp = { name: playerName, distance: num };
-          data.characterDefault.push(temp);
-        }
-        setDistance = num;
-        saveJsonData();
-        send(`Default distance set for &lt;${playerName}&gt; set at ${num}.`);
       } else {
-        send(`Invalid argument. usage : cam [add (num)|rm]`);
+        send(`Invalid argument. usage : cam add (num)`);
       }
     },
     'rm': () => {
-      for (let i = 0, n = data.characterDefault.length; i < n; i++) {
-        if (data.characterDefault[i].name === playerName) {
-          data.characterDefault.splice(i, 1);
-          saveJsonData();
-          send(`Removed character-specific distance setting for &lt;${playerName}&gt;.`);
-          break;
-        }
-      }
-    },
-    'set': (num) => {
-      if (!isNaN(num)) {
-        data.defaultDistance = num;
-        setDistance = num;
-        saveJsonData();
-        send(`Default distance set at ${num}.`);
+      if (settings.characterDefault[myName]) {
+        delete settings.characterDefault[myName];
+        send(`Removed character-specific distance setting for &lt;${myName}&gt;.`);
       } else {
-        send(`Invalid argument. usage : cam set (num)`);
+        send(`Invalid. character-specific distance setting for &lt;${myName}&gt; is not set.`);
       }
     },
     '$default': (num) => {
       if (!isNaN(num)) {
+        settings.distance = num;
+        myDistance = num;
         setCamera(num);
         send(`Distance set at : ${num}`);
       } else {
-        send(`Invalid argument. usage : cam (num)`);
+        send(`Invalid argument. usage : cam [(num)|add|rm]`);
       }
     }
   });
 
   // code
   mod.hook('S_SPAWN_ME', 'raw', () => {
-    if (enable) {
-      mod.setTimeout(() => { setCamera(setDistance); }, 1000);
+    if (settings.enable) {
+      mod.setTimeout(() => { setCamera(myDistance); }, 1000);
     }
   });
 
   mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -1000 }, (e) => {
-    playerName = e.name;
-    setDistance = data.defaultDistance;
-    for (let i = 0, n = data.characterDefault.length; i < n; i++) {
-      if (data.characterDefault[i].name === playerName) {
-        setDistance = data.characterDefault[i].distance;
-        break;
-      }
+    myName = e.name;
+    if (settings.characterDefault[myName]) {
+      myDistance = settings.characterDefault[myName];
+    } else {
+      myDistance = settings.distance;
     }
   });
 
   // helper
-  function saveJsonData() {
-    fs.writeFileSync(path.join(__dirname, 'config.json'), JSON.stringify(data, null, 2));
-  }
-
   function setCamera(distance) {
-    setDistance = distance;
     let _ = mod.trySend('S_DUNGEON_CAMERA_SET', 1, {
       enabled: true,
-      default: setDistance,
+      default: distance,
       max: distance
     });
     if (!_) {
-      enable = false;
-
+      mod.settings.enable = false;
       console.log('Unmapped protocol packet \<S_DUNGEON_CAMERA_SET\>.');
     }
   }
@@ -114,17 +79,15 @@ module.exports = function AutoCamera(mod) {
   // reload
   this.saveState = () => {
     let state = {
-      enable: enable,
-      playerName: playerName,
-      setDistance: setDistance
+      myName: myName,
+      myDistance: myDistance
     };
     return state;
   }
 
   this.loadState = (state) => {
-    enable = state.enable;
-    playerName = state.playerName;
-    setDistance = state.setDistance;
+    myName = state.myName;
+    myDistance = state.myDistance;
   }
 
   this.destructor = () => { cmd.remove('cam'); }
