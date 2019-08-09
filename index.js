@@ -15,12 +15,11 @@ module.exports = function AutoCamera(mod) {
       send(`${settings.enable ? 'En' : 'Dis'}abled`);
     },
     'add': (num) => {
+      num = parseInt(num);
       if (!isNaN(num)) {
-        if (settings.characterDefault[myName]) {
-          settings.characterDefault[myName] = num;
-          myDistance = num;
-          send(`Default distance set for &lt;${myName}&gt; set at ${num}.`);
-        }
+        myDistance = settings.characterDefault[myName] = num;
+        setCamera(num);
+        send(`Default distance set for &lt;${myName}&gt; set at ${num}.`);
       } else {
         send(`Invalid argument. usage : cam add (num)`);
       }
@@ -28,15 +27,17 @@ module.exports = function AutoCamera(mod) {
     'rm': () => {
       if (settings.characterDefault[myName]) {
         delete settings.characterDefault[myName];
+        myDistance = settings.distance;
+        setCamera(myDistance);
         send(`Removed character-specific distance setting for &lt;${myName}&gt;.`);
       } else {
-        send(`Invalid. character-specific distance setting for &lt;${myName}&gt; is not set.`);
+        send(`Invalid argument. character-specific distance setting for &lt;${myName}&gt; is not set.`);
       }
     },
     '$default': (num) => {
+      num = parseInt(num);
       if (!isNaN(num)) {
-        settings.distance = num;
-        myDistance = num;
+        myDistance = settings.distance = num;
         setCamera(num);
         send(`Distance set at : ${num}`);
       } else {
@@ -45,14 +46,23 @@ module.exports = function AutoCamera(mod) {
     }
   });
 
-  // code
-  mod.hook('S_SPAWN_ME', 'raw', () => {
-    if (settings.enable) {
-      mod.setTimeout(() => { setCamera(myDistance); }, 1000);
+  // game state
+  mod.game.on('enter_game', () => {
+    myName = mod.game.me.name;
+    if (settings.characterDefault[myName]) {
+      myDistance = settings.characterDefault[myName];
+    } else {
+      myDistance = settings.distance;
     }
   });
 
-  mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -1000 }, (e) => {
+  mod.game.on('leave_loading_screen', () => {
+    if (settings.enable) {
+      mod.setTimeout(() => { setCamera(myDistance) }, 1000);
+    }
+  });
+
+  /* mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -1000 }, (e) => {
     myName = e.name;
     if (settings.characterDefault[myName]) {
       myDistance = settings.characterDefault[myName];
@@ -60,6 +70,13 @@ module.exports = function AutoCamera(mod) {
       myDistance = settings.distance;
     }
   });
+
+  // code
+  mod.hook('S_SPAWN_ME', 'raw', { order: 10}, () => {
+    if (settings.enable) {
+      mod.setTimeout(() => { setCamera(myDistance); }, 1000);
+    }
+  }); */
 
   // helper
   function setCamera(distance) {
@@ -69,8 +86,7 @@ module.exports = function AutoCamera(mod) {
       max: distance
     });
     if (!_) {
-      mod.settings.enable = false;
-      console.log('Unmapped protocol packet \<S_DUNGEON_CAMERA_SET\>.');
+      mod.warn('Unmapped protocol packet \<S_DUNGEON_CAMERA_SET\>.');
     }
   }
 

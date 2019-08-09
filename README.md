@@ -33,6 +33,8 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    1.54
+    - Reinstated `tera-game-state`
     1.53
     - Added settings-migrator support
     - Removed `set` option
