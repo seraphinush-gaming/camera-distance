@@ -62,22 +62,6 @@ module.exports = function AutoCamera(mod) {
     }
   });
 
-  /* mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -1000 }, (e) => {
-    myName = e.name;
-    if (settings.characterDefault[myName]) {
-      myDistance = settings.characterDefault[myName];
-    } else {
-      myDistance = settings.distance;
-    }
-  });
-
-  // code
-  mod.hook('S_SPAWN_ME', 'raw', { order: 10}, () => {
-    if (settings.enable) {
-      mod.setTimeout(() => { setCamera(myDistance); }, 1000);
-    }
-  }); */
-
   // helper
   function setCamera(distance) {
     let _ = mod.trySend('S_DUNGEON_CAMERA_SET', 1, {
