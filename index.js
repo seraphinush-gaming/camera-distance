@@ -1,108 +1,82 @@
 'use strict';
 
-class AutoCamera {
+class auto_camera {
 
   constructor(mod) {
 
-    this.mod = mod;
-    this.cmd = mod.command;
-    this.game = mod.game;
-    this.settings = mod.settings;
+    this.m = mod;
+    this.c = mod.command;
+    this.g = mod.game;
+    this.s = mod.settings;
 
-    this.distance = 0;
+    this.dist = 0;
     this.name = '';
 
     // command
-    this.cmd.add('cam', {
+    this.c.add('cam', {
       '$none': () => {
-        this.settings.enable = !this.settings.enable;
-        this.send(`${this.settings.enable ? 'En' : 'Dis'}abled`);
+        this.s.enable = !this.s.enable;
+        this.send(`${this.s.enable ? 'En' : 'Dis'}abled`);
       },
-      'add': (num) => {
-        num = parseInt(num);
-        if (!isNaN(num)) {
-          this.distance = this.settings.characterDefault[name] = num;
-          this.setCamera(num);
-          this.send(`Default distance set for &lt;${this.name}&gt; set at ${num}.`);
+      'add': (n) => {
+        n = parseInt(n);
+        if (!isNaN(n)) {
+          this.dist = this.s.characterDefault[this.name] = n;
+          this.set_camera(n);
+          this.send(`Default distance set for &lt;${this.name}&gt; set at ${n}.`);
         } else {
-          this.send(`Invalid argument. usage : cam add (num)`);
+          this.send(`Invalid argument. usage : cam add &lt;num&gt;`);
         }
       },
       'rm': () => {
-        if (this.settings.characterDefault[name]) {
-          delete this.settings.characterDefault[name];
-          this.distance = this.settings.distance;
-          this.setCamera(this.distance);
+        if (this.s.characterDefault[this.name]) {
+          delete this.s.characterDefault[this.name];
+          this.dist = this.s.distance;
+          this.set_camera(this.dist);
           this.send(`Removed character-specific distance setting for &lt;${this.name}&gt;.`);
         } else {
           this.send(`Invalid argument. character-specific distance setting for &lt;${this.name}&gt; is not set.`);
         }
       },
-      '$default': (num) => {
-        num = parseInt(num);
-        if (!isNaN(num)) {
-          this.distance = this.settings.distance = num;
-          this.setCamera(num);
-          this.send(`Distance set at : ${num}`);
+      '$default': (n) => {
+        n = parseInt(n);
+        if (!isNaN(n)) {
+          this.dist = this.s.distance = n;
+          this.set_camera(n);
+          this.send(`Distance set at : ${n}`);
         } else {
-          this.send(`Invalid argument. usage : cam [(num)|add|rm]`);
+          this.send(`Invalid argument. usage : cam [&lt;num&gt;|add|rm]`);
         }
       }
     });
 
     // game state
-    this.game.on('enter_game', () => {
-      this.name = this.game.me.name;
-      if (this.settings.characterDefault[this.name]) {
-        this.distance = this.settings.characterDefault[this.name];
-      } else {
-        this.distance = this.settings.distance;
-      }
+    this.g.on('enter_game', () => {
+      this.name = this.g.me.name;
+      this.dist = this.s.characterDefault[this.name] || this.s.distance;
     });
 
-    this.game.on('leave_loading_screen', () => {
-      if (this.settings.enable) {
-        this.mod.setTimeout(() => { this.setCamera(this.distance) }, 1000);
-      }
+    this.g.on('leave_loading_screen', () => {
+      this.s.enable ? this.m.setTimeout(() => { this.set_camera(this.dist) }, 1000) : null;
     });
 
   }
 
   destructor() {
-    this.cmd.remove('cam');
-
-    this.name = undefined;
-    this.distance = undefined;
+    this.c.remove('cam');
   }
 
   // helper
-  setCamera(distance) {
-    let _ = this.mod.trySend('S_DUNGEON_CAMERA_SET', 1, {
+  set_camera(distance) {
+    this.m.send('S_DUNGEON_CAMERA_SET', 1, {
       enabled: true,
       default: distance,
       max: distance
     });
-    if (!_) {
-      this.mod.warn('Unmapped protocol packet \<S_DUNGEON_CAMERA_SET\>.');
-    }
   }
 
-  send() { this.cmd.message(': ' + [...arguments].join('\n\t - ')); }
-
-  // reload
-  saveState() {
-    let state = {
-      name: this.name,
-      distance: this.distance
-    };
-    return state;
-  }
-
-  loadState(state) {
-    this.name = state.name;
-    this.distance = state.distance;
-  }
+  send(msg) { this.c.message(': ' + msg); }
 
 }
 
-module.exports = AutoCamera;
+module.exports = auto_camera;

@@ -5,14 +5,14 @@
   "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url",
   "name": "auto-camera",
   "options": {
-    "reloadable": true,
+    "reloadable": false,
     "settingsVersion": 1,
     "settingsFile": "config.json",
     "settingsMigrator": "settings.js"
   },
   "servers": [
-    "https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/"
+    "https://raw.githubusercontent.com/ylennia-archives/auto-camera/master/"
   ],
-  "supportUrl": "https://github.com/seraphinush-gaming/auto-camera/blob/master/README.md",
-  "version": "2.00.01"
+  "supportUrl": "https://github.com/ylennia-archives/auto-camera/blob/master/README.md",
+  "version": "2.01.00"
 }

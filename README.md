@@ -28,11 +28,15 @@ Support seraph via paypal donations, thanks in advance !
 - Original author : [teralove](https://github.com/teralove)
 - Normal camera maximum distance is 500
 - Harrowhold camera maximum distance is 1200
+- Default camera maximum distance is 800
 - By default, the initial viewing distance (not max) when you login is 170
 
 ## Changelog
 <details>
 
+    2.01
+    - Removed hot-reload support
+    - Archived module
     2.00
     - Update module as class export
     1.54
