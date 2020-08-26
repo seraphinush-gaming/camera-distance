@@ -1,14 +1,8 @@
-<p align="center">
-<a href="#">
-<img src="https://github.com/seraphinush-gaming/pastebin/blob/master/logo_ttb_trans.png?raw=true" width="200" height="200" alt="tera-toolbox, logo by Foglio" />
-</a>
-</p>
-
 ```
 Support seraph via paypal donations, thanks in advance !
 ```
 
-# auto-camera [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=0070BA&colorB=333333)](https://www.paypal.me/seraphinush) 
+# auto-camera [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=0070BA&colorB=333333)](https://www.paypal.me/seraphinush)
 tera-toolbox module to unlock maximum viewing distance
 
 ## Auto-update guide
