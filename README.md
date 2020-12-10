@@ -18,6 +18,8 @@ tera-toolbox module to unlock maximum viewing distance
   - Set character-specific distance at `num`, where `num` is a value between `0` and `inf`
 - __`rm`__
   - Remove character-specific distance setting
+- __`usage`__
+  - Send command and arguments to chat
 
 ## Info
 - Original author : [teralove](https://github.com/teralove)
@@ -29,6 +31,8 @@ tera-toolbox module to unlock maximum viewing distance
 ## Changelog
 <details>
 
+    2.02
+    - Added `usage` option
     2.01
     - Removed hot-reload support
     - Archived module

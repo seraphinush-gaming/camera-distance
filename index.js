@@ -7,6 +7,7 @@ class auto_camera {
     this.mod = mod;
     this.command = mod.command;
 
+    // init
     this.dist = 0;
 
     // command
@@ -15,12 +16,12 @@ class auto_camera {
         mod.settings.enable = !mod.settings.enable;
         this.send(`${mod.settings.enable ? 'En' : 'Dis'}abled`);
       },
-      'add': (n) => {
-        n = parseInt(n);
-        if (!isNaN(n)) {
-          this.dist = mod.settings.characterDefault[mod.game.me.name] = n;
+      'add': (num) => {
+        num = parseInt(num);
+        if (!isNaN(num)) {
+          this.dist = mod.settings.characterDefault[mod.game.me.name] = num;
           this.set_camera(this.dist);
-          this.send(`Default distance set for &lt;${mod.game.me.name}&gt; set at ${n}.`);
+          this.send(`Default distance set for &lt;${mod.game.me.name}&gt; set at ${num}.`);
         } else {
           this.send(`Invalid argument. usage : cam add &lt;num&gt;`);
         }
@@ -28,19 +29,19 @@ class auto_camera {
       'rm': () => {
         if (mod.settings.characterDefault[mod.game.me.name]) {
           delete mod.settings.characterDefault[mod.game.me.name];
-          this.dist = mod.settings.distance;
-          this.set_camera(this.dist);
+          this.set_camera(this.dist = mod.settings.distance);
           this.send(`Removed character-specific distance setting for &lt;${mod.game.me.name}&gt;.`);
         } else {
           this.send(`Invalid argument. character-specific distance setting for &lt;${mod.game.me.name}&gt; is not set.`);
         }
       },
-      '$default': (n) => {
-        n = parseInt(n);
-        if (!isNaN(n)) {
-          this.dist = mod.settings.distance = n;
+      'usage': () => this.send(`Usage : cam [&lt;num&gt;|add|rm]`),
+      '$default': (num) => {
+        num = parseInt(num);
+        if (!isNaN(num)) {
+          this.dist = mod.settings.distance = num;
           this.set_camera(this.dist);
-          this.send(`Distance set at : ${n}`);
+          this.send(`Distance set at : ${num}`);
         } else {
           this.send(`Invalid argument. usage : cam [&lt;num&gt;|add|rm]`);
         }
@@ -54,6 +55,11 @@ class auto_camera {
 
     mod.game.on('leave_loading_screen', () => {
       mod.settings.enable ? mod.setTimeout(() => { this.set_camera(this.dist) }, 1000) : null;
+    });
+
+    // code
+    mod.hook('S_DUNGEON_CAMERA_SET', 'event', () => {
+      return mod.settings.enable ? false : undefined;
     });
 
   }
