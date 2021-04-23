@@ -1,5 +1,5 @@
 ```
-Support seraph via paypal donations, thanks in advance !
+Support seraph via donations, thanks in advance !
 ```
 
 # auto-camera [![](https://img.shields.io/badge/paypal-donate-333333.svg?colorA=0070BA&colorB=333333)](https://www.paypal.me/seraphinush) [![](https://img.shields.io/badge/patreon-pledge-333333.svg?colorA=F96854&colorB=333333)](https://www.patreon.com/seraphinush)
@@ -10,16 +10,16 @@ tera-toolbox module to unlock maximum viewing distance
 - Create a folder called `auto-camera` in `tera-toolbox/mods` and download >> [`module.json`](https://raw.githubusercontent.com/ylennia-archives/auto-camera/master/module.json) << (right-click this link and save link as..) into the folder
 
 ## Usage
-- __`cam`__
+- `cam`
   - Toggle on/off
 ### Arguments
-- __`<num>`__
+- `<num>`
   - Set distance at `num`, where `num` is a value between `0` and `inf`
-- __`add <num>`__
+- `add <num>`
   - Set character-specific distance at `num`, where `num` is a value between `0` and `inf`
-- __`rm`__
+- `rm`
   - Remove character-specific distance setting
-- __`usage`__
+- `help`
   - Send command and arguments to chat
 
 ## Info
@@ -32,6 +32,8 @@ tera-toolbox module to unlock maximum viewing distance
 ## Changelog
 <details>
 
+    2.03
+    - changed `usage` option to `help` option
     2.02
     - Added `usage` option
     2.01

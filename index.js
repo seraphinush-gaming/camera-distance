@@ -16,15 +16,23 @@ class auto_camera {
         mod.settings.enable = !mod.settings.enable;
         this.send(`${mod.settings.enable ? 'En' : 'Dis'}abled`);
       },
+      '$default': (num) => {
+        num = parseInt(num);
+        if (isNaN(num))
+          return this.send(`Invalid argument. usage : cam [&lt;num&gt;|add|rm|help]`);
+
+        this.dist = mod.settings.distance = num;
+        this.set_camera(this.dist);
+        this.send(`Distance set at : ${num}`);
+      },
       'add': (num) => {
         num = parseInt(num);
-        if (!isNaN(num)) {
-          this.dist = mod.settings.characterDefault[mod.game.me.name] = num;
-          this.set_camera(this.dist);
-          this.send(`Default distance set for &lt;${mod.game.me.name}&gt; set at ${num}.`);
-        } else {
-          this.send(`Invalid argument. usage : cam add &lt;num&gt;`);
-        }
+        if (isNaN(num))
+          return this.send(`Invalid argument. usage : cam add &lt;num&gt;`);
+
+        this.dist = mod.settings.characterDefault[mod.game.me.name] = num;
+        this.set_camera(this.dist);
+        this.send(`Default distance set for &lt;${mod.game.me.name}&gt; set at ${num}.`);
       },
       'rm': () => {
         if (mod.settings.characterDefault[mod.game.me.name]) {
@@ -35,17 +43,7 @@ class auto_camera {
           this.send(`Invalid argument. character-specific distance setting for &lt;${mod.game.me.name}&gt; is not set.`);
         }
       },
-      'usage': () => this.send(`Usage : cam [&lt;num&gt;|add|rm]`),
-      '$default': (num) => {
-        num = parseInt(num);
-        if (!isNaN(num)) {
-          this.dist = mod.settings.distance = num;
-          this.set_camera(this.dist);
-          this.send(`Distance set at : ${num}`);
-        } else {
-          this.send(`Invalid argument. usage : cam [&lt;num&gt;|add|rm]`);
-        }
-      }
+      'help': () => this.send(`Usage : cam [&lt;num&gt;|add|rm]`)
     });
 
     // game state
