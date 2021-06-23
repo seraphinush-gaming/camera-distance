@@ -19,7 +19,7 @@ tera-toolbox module to unlock maximum viewing distance
   - Set character-specific distance at `num`, where `num` is a value between `0` and `inf`
 - `rm`
   - Remove character-specific distance setting
-- `help`
+- `?`
   - Send command and arguments to chat
 
 ## Info
