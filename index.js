@@ -1,6 +1,6 @@
 'use strict';
 
-class auto_camera {
+class AutoCamera {
 
   constructor(mod) {
 
@@ -43,7 +43,7 @@ class auto_camera {
           this.send(`Invalid argument. character-specific distance setting for &lt;${mod.game.me.name}&gt; is not set.`);
         }
       },
-      'help': () => this.send(`Usage : cam [&lt;num&gt;|add|rm]`)
+      '?': () => this.send(`Usage : cam [&lt;num&gt;|add|rm]`)
     });
 
     // game state
@@ -79,4 +79,4 @@ class auto_camera {
 
 }
 
-module.exports = { NetworkMod: auto_camera };
+module.exports = { NetworkMod: AutoCamera };
