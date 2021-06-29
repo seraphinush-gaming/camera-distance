@@ -1,7 +1,7 @@
 'use strict';
 
 const DefaultSettings = {
-  "enable": true,
+  "enabled": true,
   "distance": "800",
   "characterDefault": {}
 }
@@ -19,7 +19,10 @@ function MigrateSettings(from_ver, to_ver, settings) {
       return MigrateSettings(from_ver + 1, to_ver, settings);
     }
     switch (to_ver) {
-      //
+      case 2:
+        settings.enabled = settings.enable;
+        delete settings.enable;
+        break;   
     }
 
     return settings;

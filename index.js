@@ -13,17 +13,17 @@ class AutoCamera {
     // command
     mod.command.add('cam', {
       '$none': () => {
-        mod.settings.enable = !mod.settings.enable;
-        this.send(`${mod.settings.enable ? 'En' : 'Dis'}abled`);
+        mod.settings.enabled = !mod.settings.enabled;
+        this.send(`${mod.settings.enabled ? 'En' : 'Dis'}abled`);
       },
       '$default': (num) => {
         num = parseInt(num);
         if (isNaN(num))
-          return this.send(`Invalid argument. usage : cam [&lt;num&gt;|add|rm|help]`);
+          return this.send(`Invalid argument. usage : cam [&lt;num&gt;|add|rm|?]`);
 
         this.dist = mod.settings.distance = num;
         this.set_camera(this.dist);
-        this.send(`Distance set at : ${num}`);
+        this.send(`Distance set at ${num}`);
       },
       'add': (num) => {
         num = parseInt(num);
@@ -52,18 +52,21 @@ class AutoCamera {
     });
 
     mod.game.on('leave_loading_screen', () => {
-      mod.settings.enable ? mod.setTimeout(() => { this.set_camera(this.dist) }, 1000) : null;
+      mod.settings.enabled ? mod.setTimeout(() => { this.set_camera(this.dist) }, 1000) : null;
     });
 
     // code
     mod.hook('S_DUNGEON_CAMERA_SET', 'event', () => {
-      return mod.settings.enable ? false : undefined;
+      return mod.settings.enabled ? false : undefined;
     });
 
   }
 
   destructor() {
     this.command.remove('cam');
+
+    this.command = undefined;
+    this.mod = undefined;
   }
 
   // helper

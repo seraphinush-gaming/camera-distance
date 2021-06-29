@@ -12,6 +12,7 @@ tera-toolbox module to unlock maximum viewing distance
 ## Usage
 - `cam`
   - Toggle
+
 ### Arguments
 - `<num>`
   - Set distance at `num`, where `num` is a value between `0` and `inf`
