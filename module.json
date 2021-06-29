@@ -10,7 +10,7 @@
     "settingsFile": "config.json",
     "settingsMigrator": "settings.js"
   },
-  "servers": ["https://raw.githubusercontent.com/ylennia-archives/auto-camera/master/"],
-  "supportUrl": "https://github.com/ylennia-archives/auto-camera/blob/master/README.md",
-  "version": "2.04.02.v107.02"
+  "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/auto-camera/master/"],
+  "supportUrl": "https://github.com/seraphinush-gaming/auto-camera/blob/master/README.md",
+  "version": "2.04.03.v107.02"
 }
